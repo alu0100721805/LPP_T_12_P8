@@ -5,7 +5,7 @@ require 'lista_quiz/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "lista_quiz"
-  spec.version       = ListaQuiz::VERSION
+  spec.version       = Quiz::VERSION
   spec.authors       = ["Juan Jose Gregorio  Diaz Marrero"]
   spec.email         = ["alu0100721805@ull.edu.es"]
   spec.summary       = %q{TODO: Write a short summary. Required.}
@@ -20,4 +20,9 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", "~>2.11"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"	
+  spec.add_development_dependency "guard-bundler"
 end
+ 

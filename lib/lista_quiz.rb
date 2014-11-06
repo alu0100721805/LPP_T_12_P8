@@ -1,5 +1,8 @@
-require "lista_quiz/version"
+#Práctica 6
+#Realizada por Juan José Gregorio Díaz Marrero y Miguel Aurelio García González
 
-module ListaQuiz
-  # Your code goes here...
+module Quiz 
+
+	
 end
+
