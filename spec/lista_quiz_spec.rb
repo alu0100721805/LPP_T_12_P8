@@ -1,4 +1,4 @@
-#Práctica 6
+#Práctica 7
 
 #Realizada por Juan José Gregorio Díaz Marrero y Miguel Aurelio García González
 
