@@ -36,7 +36,6 @@ before :all do
 
 		@lista.insertarElemento_final(@nodo1)
 		@lista.insertarElemento_final(@nodo2)
-
 		
 		
 		@q3 = Quiz::Question.new("¿Hará frío mañana?")
@@ -50,7 +49,8 @@ before :all do
 		@p4 = Quiz::BoolQuestion.new(@q4)	
 		@p4.insert_Respuesta(true, "NO")
 		
-		@lista.to_s
+		#@lista.to_s
+		puts  @lista.max
 			   
 			
 		
@@ -105,26 +105,34 @@ before :all do
 		
 		
 		(@p1 == @p1).should == true
-		(@p2 == @p2).should == true
+		(@p3 == @p4).should == false
 
 	end
 	it "Respuestas A Distinto B (ambas SimpleQuestion y BoolQuestion)" do
 		
 		
 		(@p1 != @p1).should == false
-		(@p2 != @p2).should == false
+		(@p3 != @p4).should == true
 
 	end
 	it "Respuesta A menor B" do
 
-		(@p3 < @p1).should == true
-		(@p4 < @p2).should == false
+		(@p4 < @p3).should == true
 		
 	end
 	it "Respuesta A mayor B" do
 
-		(@p1 > @p3).should == true
-		(@p4 > @p2).should == false
+		(@p3 > @p4).should == true
+		
+	end
+	
+	it " Respuesta Q1 es MAX" do
+
+		(@lista.min == nil).should == false
+	end
+	it " Respuesta Q1 es MiN" do
+
+		(@lista.max == nil).should == false
 	end
 	
 	

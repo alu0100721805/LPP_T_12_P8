@@ -3,6 +3,7 @@
 
 module Quiz 
 	class Question
+	        include Comparable
 		attr_accessor :texto
 		def initialize(text)
 		raise ArgumentError, 'El argumento no es una cadena' unless text.is_a?(String)
@@ -10,8 +11,10 @@ module Quiz
 		end
 		def to_s
 		    puts @texto 		
+		end
+		def <=>(o)
+		    texto <=> o
 		end  
-
 	end
 
 	class SimpleQuestion
@@ -19,23 +22,9 @@ module Quiz
 		attr_accessor :pregunta, :respuestas
 		
 		def <=>(o)
-		   aux_arr1 = []
-		   aux_arr1 << @pregunta
-		   aux_arr2 = []
-		   aux_arr2 << o.pregunta
-		   if (@respuestas.length != 0)
-		    for i in 1..@respuestas.length
-       			 aux_arr1 << @respuestas[i]
-			 i= i + 2
-		    end
-		   end
-		   if (o.respuestas.length != 0)
-		    for i in 1..o.respuestas.length
-       			 aux_arr2 << o.respuestas[i]
-			 i= i + 2
-		    end
-		   end
-		    aux_arr1.length <=> aux_arr2.length 
+		   if (@pregunta == o.pregunta) 
+		   	@respuestas.length <=> o.respuestas.length
+		   end 
 		end
 
 		def initialize(preg) 
@@ -220,10 +209,15 @@ module Quiz
 		def cont
 			@cont
 		end
-		def each (&block)
+		def each
 
-			 yield @tail
-			 yield @head
+			aux = @tail
+			while (aux != nil ) do	
+				 yield aux	          		
+				 aux = aux.sig
+				
+			end
+
 		end 
 		
 		def to_s
@@ -232,7 +226,7 @@ module Quiz
 		         	puts aux.valor	
 	          		aux = aux.sig
 			end
-	
+			
 		end
 
 
