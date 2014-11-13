@@ -2,13 +2,46 @@
 #Realizada por Juan José Gregorio Díaz Marrero y Miguel Aurelio García González
 
 module Quiz 
+	class Question
+		attr_accessor :texto
+		def initialize(text)
+		raise ArgumentError, 'El argumento no es una cadena' unless text.is_a?(String)
+		@texto = text
+		end
+		def to_s
+		    puts @texto 		
+		end  
+
+	end
 
 	class SimpleQuestion
-
-		attr_accessor :preguntas, :respuestas
+		include Comparable
+		attr_accessor :pregunta, :respuestas
+		
+		def <=>(o)
+		   aux_arr1 = []
+		   aux_arr1 << @pregunta
+		   aux_arr2 = []
+		   aux_arr2 << o.pregunta
+		   if (@respuestas.length != 0)
+		    for i in 1..@respuestas.length
+       			 aux_arr1 << @respuestas[i]
+			 i= i + 2
+		    end
+		   end
+		   if (o.respuestas.length != 0)
+		    for i in 1..o.respuestas.length
+       			 aux_arr2 << o.respuestas[i]
+			 i= i + 2
+		    end
+		   end
+		    aux_arr1.length <=> aux_arr2.length 
+		end
 
 		def initialize(preg) 
-			raise ArgumentError, 'El argumento no es una cadena' unless preg.is_a?(String)  
+			
+		        raise ArgumentError, 'El argumento no es una pregunta' unless preg.is_a?(Question)
+							
 			@pregunta = preg 
 			@respuestas = [] 			
 
@@ -78,19 +111,19 @@ module Quiz
 		    puts	
 		  end
 		  def valor
-		    puts @valor.to_s	
+		     return @valor	
 		  end
 		  def sig
-		     puts @sig.valor	
+		     return @sig
 		  end
 		  def ant
-		     puts @ant.valor
+		      return @ant
 		  end
 		
 		  
         end
 	class BoolQuestion < SimpleQuestion
-		
+				
 		def insert_Respuesta (valor, resp)
 		   if @respuestas.empty? == false
 			@respuestas.clear
@@ -144,7 +177,7 @@ module Quiz
 	
 	end
 	class ListaEnlazada
-
+		include Enumerable
 		attr_accessor :head, :tail
 		def intialize ()
 		  @head = nil
@@ -158,16 +191,17 @@ module Quiz
 				@tail = nodo
 				nodo.sig = nil
 				nodo.ant = nil
-				nodo.valor
 				@cont = 1 
 			elsif (@head != nil)
+				aux = @head
 				@head.sig = nodo
 				nodo.ant = @head
-				@head.valor
 				@head = nodo
-				@head.valor
+				@head.sig = nil
+				@head.ant = aux
 				@cont = @cont + 1
 			end
+			
 		    
 		end
 		def eliminarElemento_final
@@ -185,7 +219,21 @@ module Quiz
 	        end
 		def cont
 			@cont
+		end
+		def each (&block)
+
+			 yield @tail
+			 yield @head
 		end 
+		
+		def to_s
+			 aux = @tail
+			while (aux != nil ) do
+		         	puts aux.valor	
+	          		aux = aux.sig
+			end
+	
+		end
 
 
 	end
