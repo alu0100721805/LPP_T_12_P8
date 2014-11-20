@@ -277,14 +277,13 @@ module Quiz
 			end
 	        end
 		def each
-			i = 1
+		
 			aux = @tail
 			while (aux != nil ) do
-				 puts
-				 puts "Pregunta #{i})"
+				
 				 yield aux.valor	          		
 				 aux = aux.sig
-				 i += 1
+				 
 			end
 		end 
 		
