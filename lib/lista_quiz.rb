@@ -306,6 +306,32 @@ module Quiz
 	    @contador = 0
 	    @aciertos = 0
 	  end
+	  
+	  def comenzar_Examen
+	     i=1
+	    @examen.collect do |x|
+	      print "#{i}-) "
+	      x.to_s
+	      i= i + 1
+	      puts "Su respuesta: "
+	      resp =  gets.chomp.to_i
+	      raise IndexError, "La respuesta debe estar entre 1 y #{x.respuestas.size}." unless resp <= x.respuestas.size and resp > 0
+	      aux = x.respuestas[resp-1]
+			if aux[0] == true
+				puts "##################################"
+				puts "#           Correcto!            #"
+				puts "##################################"
+				@aciertos += 1
+				@contador += 1
+			else
+				puts "----------------------------------"
+				puts "---         Fallo              ---"
+				puts "----------------------------------"
+				@contador += 1
+			end
+		end
+		puts "Has acertado el #{(@aciertos/@contador.to_f)*100}% de las preguntas [#{@aciertos} de #{@contador}]."	    
+	  end
  
 	
 	end

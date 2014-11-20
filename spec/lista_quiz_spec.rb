@@ -137,5 +137,9 @@ before :all do
 	  
 		(@ex1.instance_of? Quiz::Examen).should == true
 	end	
+	it "Existe método para hacer correr el examen y que el usuario realize dicho examen" do
+		
+		(@ex1.respond_to? :comenzar_Examen).should == true
+	end
 
 end
