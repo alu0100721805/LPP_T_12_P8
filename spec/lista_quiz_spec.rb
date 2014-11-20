@@ -1,15 +1,14 @@
 #Práctica 7
 
 #Realizada por Juan José Gregorio Díaz Marrero y Miguel Aurelio García González
-
-require 'lista_quiz.rb'
 require 'spec_helper.rb'
+require 'lista_quiz.rb'
 
 describe Quiz do	
 
 before :all do
-		
-		@q1 = Quiz::Question.new("¿Cuál es el tipo del objeto en el siguiente código Ruby?\nclass Objeto\nend")
+
+		@q1 = Quiz::Question.new("¿Cuál es el tipo del objeto en el siguiente código Ruby?\n\tclass Objeto\n\tend")
 		@p1 = Quiz::SimpleQuestion.new(@q1)
 
 		@p1.insert_Respuesta(true, "Una instancia de la clase Class")
@@ -21,23 +20,9 @@ before :all do
 		@p2 = Quiz::BoolQuestion.new(@q2)
 
 		@p2.insert_Respuesta(false, "SI")
+
 		
-		@q3 = Quiz::Question.new("¿Hoy?")
-		@p3 = Quiz::BoolQuestion.new(@q3)
-
-		@p3.insert_Respuesta(true, "SI")
-
-		@nodo1 = Quiz::Node.new(@p1)
-		@nodo2 = Quiz::Node.new(@p2)
-		@nodo3 = Quiz::Node.new(@p3)
-		@nodo4 = Quiz::Node.new(@p4)
-
-		@lista = Quiz::ListaEnlazada.new
-
-		@lista.insertarElemento_final(@nodo1)
-		@lista.insertarElemento_final(@nodo2)
-		
-		
+	
 		@q3 = Quiz::Question.new("¿Hará frío mañana?")
 		@p3 = Quiz::SimpleQuestion.new(@q3)
 		
@@ -48,12 +33,23 @@ before :all do
 		@q4 = Quiz::Question.new("¿Hará frío mañana?")
 		@p4 = Quiz::BoolQuestion.new(@q4)	
 		@p4.insert_Respuesta(true, "NO")
+
+		@nodo1 = Quiz::Node.new(@p1)
+		@nodo2 = Quiz::Node.new(@p2)
+		@nodo3 = Quiz::Node.new(@p3)
+		@nodo4 = Quiz::Node.new(@p4)
+
 		
-		#@lista.to_s
-		puts  @lista.max
-			   
+		@lista = Quiz::ListaEnlazada.new
+
+		@lista.insertarElemento_final(@nodo1)
+		@lista.insertarElemento_final(@nodo2)
+		@lista.insertarElemento_despuesdenodo(@nodo2,@nodo4)
+		@lista.buscarNodo(@nodo4)
+		
+		puts  @lista.collect { |x| puts x.to_s}
+		@ex1 = Quiz::Examen.new(@lista)
 			
-		
 	end	
 
 	it "Debe existir una pregunta" do
@@ -117,24 +113,29 @@ before :all do
 	end
 	it "Respuesta A menor B" do
 
-		(@p4 < @p3).should == true
+		(@p1 < @p3).should == true
 		
 	end
 	it "Respuesta A mayor B" do
 
-		(@p3 > @p4).should == true
+		(@p3 > @p1).should == true
 		
-	end
-	
-	it " Respuesta Q1 es MAX" do
+	end	
+	it " Respuesta  existe MAX" do
 
-		(@lista.min == nil).should == false
+		(@lista.max != nil).should == true
 	end
-	it " Respuesta Q1 es MiN" do
+	it " Respuesta existe MiN" do
 
-		(@lista.max == nil).should == false
+		(@lista.min != nil).should == true
 	end
-	
-	
+	it "Existe clase examen" do
+	  
+		(@ex1.is_a? Quiz::Examen).should == true
+	end
+	it "Existe instancia de la clase examen" do
+	  
+		(@ex1.instance_of? Quiz::Examen).should == true
+	end	
 
 end

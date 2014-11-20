@@ -13,17 +13,22 @@ module Quiz
 		    puts @texto 		
 		end
 		def <=>(o)
-		    texto <=> o
+		    @texto <=> o
 		end  
 	end
 
 	class SimpleQuestion
 		include Comparable
 		attr_accessor :pregunta, :respuestas
-		
 		def <=>(o)
-		   if (@pregunta == o.pregunta) 
-		   	@respuestas.length <=> o.respuestas.length
+		   if (@pregunta == o.pregunta)
+		   	return @respuestas.length <=> o.respuestas.length
+		   else
+			if(@pregunta > o.pregunta)
+				return 1
+			else
+				return -1
+			end
 		   end 
 		end
 
@@ -36,7 +41,7 @@ module Quiz
 
 		end
 
-		def insert_Respuesta(valor, resp)
+		def insert_Respuesta(valor=false, resp)
 
 			raise ArgumentError, 'El argumento no es una cadena' unless resp.is_a?(String)
 			arr_respuesta = []
@@ -48,12 +53,13 @@ module Quiz
 
 		def to_s
 
-			puts @pregunta
-	               
+			puts @pregunta.to_s
+			i = 1
 			@respuestas.each do |a|
-			puts a[1]
+			puts "(#{i}) #{a[1]}"
+			i += 1
 			end
-			puts 
+			puts
 		end
 
 	end
@@ -112,7 +118,7 @@ module Quiz
 		  
         end
 	class BoolQuestion < SimpleQuestion
-				
+	    	
 		def insert_Respuesta (valor, resp)
 		   if @respuestas.empty? == false
 			@respuestas.clear
@@ -126,7 +132,8 @@ module Quiz
 			arr_respuesta2 = []
 			arr_respuesta2 << false
  			arr_respuesta2 << "NO"
-			@respuestas << arr_respuesta2								
+			@respuestas << arr_respuesta2
+								
 		    elsif (valor == false && resp == "NO")
 			
 		        arr_respuesta = []
@@ -159,6 +166,7 @@ module Quiz
 			arr_respuesta2 << true
  			arr_respuesta2 << "NO"
 			@respuestas << arr_respuesta2
+
 		     else
 			 puts "No se pudo introducir la respuesta ,asegurese de que valor sea un booleano y respuesta del tipo cadena 'SI' o 'NO'"			
 		     end
@@ -171,65 +179,135 @@ module Quiz
 		def intialize ()
 		  @head = nil
 		  @tail = nil
-		  @cont = 0
-	        end 
+	        end
+		def buscarNodo(nodo)
 		
+		    if(nodo != nil)
+		    	raise ArgumentError, 'El argumento no es un Nodo' unless nodo.is_a?(Node)
+			aux = @tail
+			cont = 1 		 
+			while (aux != nil) do
+				if (aux.valor == nodo.valor)
+					puts "Nodo encontrado en la posicion #{cont}"
+					
+				end
+			  cont = cont + 1				
+			  aux = aux.sig
+			end		    	
+		
+		    end
+		
+		end
+		def insertarElemento_despuesdenodo(nodoviejo,nodonuevo)
+		
+		    if(nodoviejo != nil && nodonuevo != nil)
+		    	raise ArgumentError, 'El argumento primero no es un Nodo' unless nodoviejo.is_a?(Node)
+			raise ArgumentError, 'El argumento segungo no es un Nodo' unless nodonuevo.is_a?(Node)
+			aux = @tail 
+			while (aux != nil) do
+				if (aux.valor == nodoviejo.valor)
+					if(aux.sig == nil)
+						aux.sig = nodonuevo
+						nodonuevo.ant = aux
+						nodonuevo.sig = nil
+					else
+						 aux2 = aux.sig
+						nodonuevo.sig = aux2
+						nodonuevo.ant = aux
+						aux.sig = nodonuevo
+						aux2.ant = nodonuevo	 
+					end
+					puts " Nodo insertado "
+					return
+				end	
+
+			  aux = aux.sig
+			end		    	
+		
+		    end
+		end 
 		def insertarElemento_final(nodo)
 			if (@head == nil)
 				@head = nodo
 				@tail = nodo
 				nodo.sig = nil
 				nodo.ant = nil
-				@cont = 1 
-			elsif (@head != nil)
-				aux = @head
-				@head.sig = nodo
+			else
+				
+				nodo.sig = nil
 				nodo.ant = @head
+				@head.sig = nodo
 				@head = nodo
-				@head.sig = nil
-				@head.ant = aux
-				@cont = @cont + 1
+				
 			end
 			
 		    
+		end
+		
+		def insertarElemento_principio(nodo)
+
+			if (@head == nil)
+				@head = nodo
+				@tail = nodo
+				nodo.sig = nil
+				nodo.ant = nil
+			else
+				aux = @tail
+				@tail.ant = nodo
+				nodo.sig = @tail
+				@tail = nodo
+				@tail.ant = nil
+			end
+
+
+
 		end
 		def eliminarElemento_final
 			if (@head != nil)
 			 	if (@head.ant == nil)
 			    	  @tail = nil
 			   	  @head = nil
+				  puts "Lista vacia"
 			       else
-			          @head = @head.ant
-			          @head.sig = nil
+				  aux = @head.ant
+				  @head = nil
+				  @head = aux
+				  @head.sig = nil
 			        end
-		        else
-				puts "Lista vacía"
 			end
 	        end
-		def cont
-			@cont
-		end
 		def each
-
+			i = 1
 			aux = @tail
-			while (aux != nil ) do	
-				 yield aux	          		
+			while (aux != nil ) do
+				 puts
+				 puts "Pregunta #{i})"
+				 yield aux.valor	          		
 				 aux = aux.sig
-				
+				 i += 1
 			end
-
 		end 
 		
 		def to_s
-			 aux = @tail
+			aux = @tail
 			while (aux != nil ) do
-		         	puts aux.valor	
+		         	puts aux.valor.to_s	
 	          		aux = aux.sig
 			end
 			
 		end
 
-
+	end
+	
+	class Examen
+	  	  
+	  def initialize(examen)
+	    @examen = examen
+	    @contador = 0
+	    @aciertos = 0
+	  end
+ 
+	
 	end
 
 	
