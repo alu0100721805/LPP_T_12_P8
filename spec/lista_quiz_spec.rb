@@ -41,14 +41,26 @@ before :all do
 
 		
 		@lista = Quiz::ListaEnlazada.new
-
+		@lista2 = Quiz::ListaEnlazada.new
+	
 		@lista.insertarElemento_final(@nodo1)
 		@lista.insertarElemento_final(@nodo2)
-		@lista.insertarElemento_despuesdenodo(@nodo2,@nodo4)
-		@lista.buscarNodo(@nodo4)
-		
-		puts  @lista.collect { |x| puts x.to_s}
+		@lista.insertarElemento_final(@nodo3)
+		@lista2 = @lista.invertirLista
+
 		@ex1 = Quiz::Examen.new(@lista)
+		@aux1 = [0,1,0]
+		@ex1.respuestas_examen = @aux1
+		@ex2 = Quiz::Examen.new(@lista)
+		@aux2 = [1,1,2]
+		@ex2.respuestas_examen = @aux2
+		puts @ex1.cuentaAciertos
+		puts @ex2.cuentaAciertos
+		
+		@usuario = Quiz::InterfazUsuario.new(@ex1)
+		@lista.to_s
+		@lista2.to_s
+		
 			
 	end	
 
@@ -129,17 +141,76 @@ before :all do
 
 		(@lista.min != nil).should == true
 	end
-	it "Existe clase examen" do
+  ## Espectativas de una clase Examen 
+	it "Existe clase examen y su instancia?" do
 	  
 		(@ex1.is_a? Quiz::Examen).should == true
-	end
-	it "Existe instancia de la clase examen" do
-	  
 		(@ex1.instance_of? Quiz::Examen).should == true
-	end	
-	it "Existe método para hacer correr el examen y que el usuario realize dicho examen" do
-		
-		(@ex1.respond_to? :comenzar_Examen).should == true
 	end
+	it "La clase examen contiene una lista de preguntas y ésta es distinta a nula ?" do
 
-end
+		(@ex1.examen.is_a? Quiz::ListaEnlazada).should == true
+		(@ex1.examen.instance_of? Quiz::ListaEnlazada).should == true
+		(@ex1.examen != nil) == true
+
+	end
+	it "La clase examen contiene un atributo que guardar el número de preguntas que contiene el mismo" do
+		
+		(@ex1.n_preguntas.is_a? Integer).should == true
+	end
+	it "La clase examen contiene un atributo para guardar los aciertos del examen ?" do
+		(@ex1.aciertos.is_a? Integer).should == true
+
+	end
+	it " La calse examen contiene un atributo que nos devuelve el número de preguntas que contiene dicho examen" do
+		
+		(@ex1.respond_to? :n_preguntas).should == true 
+	end
+	it "La clase examen contiene un método para calcular el resultado del mismo" do
+		(@ex1.respond_to? :cuentaAciertos).should == true
+		(@ex1.respond_to? :resultado).should == true
+	end
+	it "El examen está aprobado?" do
+
+		(@ex1.resultado >= 5).should == true
+	end
+	it "El examen está suspendido" do
+		
+		(@ex2.resultado < 5).should == true
+	end
+	it "El examen contiene el arrray de las respuestas que introdujo el usuario al realizar el mismo" do
+		(@ex1.respuestas_examen.is_a? Array).should == true
+	end
+	
+
+   ## Espectativas de una Interfaz
+
+	it "Existe la clase interfaz de usuario y contiene un examen?" do
+		
+		(@ex1.is_a? Quiz::Examen).should == true
+		(@ex1.instance_of? Quiz::Examen).should == true
+		(@usuario.is_a? Quiz::InterfazUsuario).should == true
+		(@usuario.instance_of? Quiz::InterfazUsuario).should == true	
+	end
+	it "El objeto interfaz contiene un método para mostrar el menú de elección del usuario para mostrar el examen" do
+
+		(@usuario.respond_to?:menu).should == true	
+	end
+	it "El objeto interfaz contiene un método para imprimir un examen" do
+
+		(@usuario.respond_to?:imprimirExamen).should == true	
+ 	end
+	it "El objeto interfaz contiene un método para realizar un examen" do
+
+		(@usuario.respond_to?:ejecutarExamen).should == true	
+ 	end
+   ## Espectativas para invertir un examen
+
+	it "Existe un método para invertir una lista con las preguntas del examen y que devuelve la misma lista pero invertida" do
+		(@lista.respond_to?:invertirLista).should == true
+	end
+	it " Comparar lista 1 cabeza con la cola lista2 inversa cola para ver si coinciden " do
+		(@lista.head == @lista2.tail).should == true
+	end
+  end
+

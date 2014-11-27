@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>lista_quiz_spec.rb~ - RDoc Documentation</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Gemfile.html">Gemfile</a>
+  
+    <li><a href="../Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li><a href="../Guardfile.html">Guardfile</a>
+  
+    <li><a href="../LICENSE_txt.html">LICENSE</a>
+  
+    <li><a href="../README_md.html">README</a>
+  
+    <li><a href="../Rakefile.html">Rakefile</a>
+  
+    <li><a href="../lib/lista_quiz_rb~.html">lista_quiz.rb~</a>
+  
+    <li><a href="../lista_quiz_gemspec.html">lista_quiz.gemspec</a>
+  
+    <li><a href="../spec/lista_quiz_spec_rb~.html">lista_quiz_spec.rb~</a>
+  
+    <li><a href="../spec/spec_helper_rb~.html">spec_helper.rb~</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page spec/lista_quiz_spec.rb~">
+
+<p>#Práctica 7</p>
+
+<p>#Realizada por Juan José Gregorio Díaz Marrero y Miguel Aurelio García
+González require &#39;spec_helper.rb&#39; require &#39;lista_quiz.rb&#39;</p>
+
+<p>describe <a href="../Quiz.html">Quiz</a> do</p>
+
+<p>before :all do</p>
+
+<pre>              @q1 = Quiz::Question.new(&quot;¿Cuál es el tipo del objeto en el siguiente código Ruby?\n\tclass Objeto\n\tend&quot;)
+              @p1 = Quiz::SimpleQuestion.new(@q1)
+
+              @p1.insert_Respuesta(true, &quot;Una instancia de la clase Class&quot;)
+              @p1.insert_Respuesta(false, &quot;Una constante&quot;)
+              @p1.insert_Respuesta(false, &quot;Un objeto&quot;)
+              @p1.insert_Respuesta(false, &quot;Ninguna de las anteriores&quot;)
+
+              @q2 = Quiz::Question.new(&quot;Es apropiado que una clase Tablero herede de una clase Juego&quot;)
+              @p2 = Quiz::BoolQuestion.new(@q2)
+
+              @p2.insert_Respuesta(false, &quot;SI&quot;)
+
+              @q3 = Quiz::Question.new(&quot;¿Hará frío mañana?&quot;)
+              @p3 = Quiz::SimpleQuestion.new(@q3)
+
+              @p3.insert_Respuesta(true, &quot;Sí&quot;)
+              @p3.insert_Respuesta(false, &quot;No&quot;)
+              @p3.insert_Respuesta(false, &quot;Tal vez&quot;)
+
+              @q4 = Quiz::Question.new(&quot;¿Hará frío mañana?&quot;)
+              @p4 = Quiz::BoolQuestion.new(@q4)       
+              @p4.insert_Respuesta(true, &quot;NO&quot;)
+
+              @nodo1 = Quiz::Node.new(@p1)
+              @nodo2 = Quiz::Node.new(@p2)
+              @nodo3 = Quiz::Node.new(@p3)
+              @nodo4 = Quiz::Node.new(@p4)
+
+              @lista = Quiz::ListaEnlazada.new
+              @lista2 = Quiz::ListaEnlazada.new
+
+              @lista.insertarElemento_final(@nodo1)
+              @lista.insertarElemento_final(@nodo2)
+              @lista.insertarElemento_final(@nodo3)
+              @lista2 = @lista.invertirLista
+
+              @ex1 = Quiz::Examen.new(@lista)
+              @aux1 = [0,1,0]
+              @ex1.respuestas_examen = @aux1
+              @ex2 = Quiz::Examen.new(@lista)
+              @aux2 = [1,1,2]
+              @ex2.respuestas_examen = @aux2
+              puts @ex1.cuentaAciertos
+              puts @ex2.cuentaAciertos
+
+              @usuario = Quiz::InterfazUsuario.new(@ex1)
+              @lista.to_s
+              @lista2.to_s
+
+      end     
+
+      it &quot;Debe existir una pregunta&quot; do
+
+              (@p1.instance_of? Quiz::SimpleQuestion).should == true
+              (@p2.instance_of? Quiz::BoolQuestion).should == true
+      end
+
+      it &quot;Se debe invocar a un método para obtener la pregunta&quot; do
+
+              (@p1.respond_to? :pregunta).should == true
+      end
+
+      it &quot;Deben existir opciones de respuesta&quot; do
+
+              @p1.should_not == nil
+              @p2.should_not == nil
+      end
+
+      it &quot;Se deben mostrar por la consola formateada la pregunta y las opciones de respuesta&quot; do
+
+              (@p1.respond_to? :to_s).should == true
+      end
+
+      it &quot;Debe existir un nodo de la lista con sus datos y su siguiente&quot; do
+
+              (@lista.head).should_not == nil
+
+      end     
+
+      it &quot;Se extrae el primer elemento de la lista&quot; do
+
+              (@lista.respond_to? :eliminarElemento_final).should == true
+
+      end
+
+      it &quot;Se puede insertar un elemento&quot; do
+              (@lista.respond_to? :insertarElemento_final).should == true
+      end
+
+      it &quot;Debe existir una lista con su cabeza&quot; do
+              (@lista.is_a? Quiz::ListaEnlazada).should == true
+              (@lista.instance_of? Quiz::ListaEnlazada).should == true
+              ((@lista.head) != nil).should == true
+      end
+
+      it &quot;Respuestas A Igual B (ambas SimpleQuestion y BoolQuestion)&quot; do
+
+              (@p1 == @p1).should == true
+              (@p3 == @p4).should == false
+
+      end
+      it &quot;Respuestas A Distinto B (ambas SimpleQuestion y BoolQuestion)&quot; do
+
+              (@p1 != @p1).should == false
+              (@p3 != @p4).should == true
+
+      end
+      it &quot;Respuesta A menor B&quot; do
+
+              (@p1 &lt; @p3).should == true
+
+      end
+      it &quot;Respuesta A mayor B&quot; do
+
+              (@p3 &gt; @p1).should == true
+
+      end     
+      it &quot; Respuesta  existe MAX&quot; do
+
+              (@lista.max != nil).should == true
+      end
+      it &quot; Respuesta existe MiN&quot; do
+
+              (@lista.min != nil).should == true
+      end
+## Espectativas de una clase Examen 
+      it &quot;Existe clase examen y su instancia?&quot; do
+
+              (@ex1.is_a? Quiz::Examen).should == true
+              (@ex1.instance_of? Quiz::Examen).should == true
+      end
+      it &quot;La clase examen contiene una lista de preguntas y ésta es distinta a nula ?&quot; do
+
+              (@ex1.examen.is_a? Quiz::ListaEnlazada).should == true
+              (@ex1.examen.instance_of? Quiz::ListaEnlazada).should == true
+              (@ex1.examen != nil) == true
+
+      end
+      it &quot;La clase examen contiene un atributo que guardar el número de preguntas que contiene el mismo&quot; do
+
+              (@ex1.n_preguntas.is_a? Integer).should == true
+      end
+      it &quot;La clase examen contiene un atributo para guardar los aciertos del examen ?&quot; do
+              (@ex1.aciertos.is_a? Integer).should == true
+
+      end
+      it &quot; La calse examen contiene un atributo que nos devuelve el número de preguntas que contiene dicho examen&quot; do
+
+              (@ex1.respond_to? :n_preguntas).should == true 
+      end
+      it &quot;La clase examen contiene un método para calcular el resultado del mismo&quot; do
+              (@ex1.respond_to? :cuentaAciertos).should == true
+              (@ex1.respond_to? :resultado).should == true
+      end
+      it &quot;El examen está aprobado?&quot; do
+
+              (@ex1.resultado &gt;= 5).should == true
+      end
+      it &quot;El examen está suspendido&quot; do
+
+              (@ex2.resultado &lt; 5).should == true
+      end
+      it &quot;El examen contiene el arrray de las respuestas que introdujo el usuario al realizar el mismo&quot; do
+              (@ex1.respuestas_examen.is_a? Array).should == true
+      end
+
+ ## Espectativas de una Interfaz
+
+      it &quot;Existe la clase interfaz de usuario y contiene un examen?&quot; do
+
+              (@ex1.is_a? Quiz::Examen).should == true
+              (@ex1.instance_of? Quiz::Examen).should == true
+              (@usuario.is_a? Quiz::InterfazUsuario).should == true
+              (@usuario.instance_of? Quiz::InterfazUsuario).should == true    
+      end
+      it &quot;El objeto interfaz contiene un método para mostrar el menú de elección del usuario para mostrar el examen&quot; do
+
+              (@usuario.respond_to?:menu).should == true      
+      end
+      it &quot;El objeto interfaz contiene un método para imprimir un examen&quot; do
+
+              (@usuario.respond_to?:imprimirExamen).should == true    
+      end
+      it &quot;El objeto interfaz contiene un método para realizar un examen&quot; do
+
+              (@usuario.respond_to?:ejecutarExamen).should == true    
+      end
+ ## Espectativas para invertir un examen
+
+      it &quot;Existe un método para invertir una lista con las preguntas del examen y que devuelve la misma lista pero invertida&quot; do
+              (@lista.respond_to?:invertirLista).should == true
+      end
+
+end</pre>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

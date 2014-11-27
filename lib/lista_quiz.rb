@@ -175,7 +175,7 @@ module Quiz
 	end
 	class ListaEnlazada
 		include Enumerable
-		attr_accessor :head, :tail
+		attr_accessor :head, :tail,:size
 		def intialize ()
 		  @head = nil
 		  @tail = nil
@@ -227,41 +227,23 @@ module Quiz
 		    end
 		end 
 		def insertarElemento_final(nodo)
+		    if (nodo != nil)			
 			if (@head == nil)
 				@head = nodo
 				@tail = nodo
 				nodo.sig = nil
 				nodo.ant = nil
 			else
-				
-				nodo.sig = nil
-				nodo.ant = @head
+				aux_ant = Node.new				
+				aux_ant = @head
 				@head.sig = nodo
 				@head = nodo
-				
+				@head.ant = aux_ant	
+				@head.sig = nil
 			end
-			
-		    
+		     end			  
 		end
 		
-		def insertarElemento_principio(nodo)
-
-			if (@head == nil)
-				@head = nodo
-				@tail = nodo
-				nodo.sig = nil
-				nodo.ant = nil
-			else
-				aux = @tail
-				@tail.ant = nodo
-				nodo.sig = @tail
-				@tail = nodo
-				@tail.ant = nil
-			end
-
-
-
-		end
 		def eliminarElemento_final
 			if (@head != nil)
 			 	if (@head.ant == nil)
@@ -281,12 +263,11 @@ module Quiz
 			aux = @tail
 			while (aux != nil ) do
 				
-				 yield aux.valor	          		
+				 yield aux	          		
 				 aux = aux.sig
 				 
 			end
 		end 
-		
 		def to_s
 			aux = @tail
 			while (aux != nil ) do
@@ -295,46 +276,130 @@ module Quiz
 			end
 			
 		end
+		def invertirLista
+
+			listainvertida = ListaEnlazada.new
+			 aux = @head			
+			while (aux != nil) do 
+				nuevo_nodo = Node.new
+				nuevo_nodo.sig = aux.sig
+				nuevo_nodo.ant = aux.ant
+				nuevo_nodo.valor = aux.valor
+				listainvertida.insertarElemento_final(nuevo_nodo)
+				aux =aux.ant	
+			end
+			return listainvertida
+
+		end
 
 	end
 	
 	class Examen
-	  	  
-	  def initialize(examen)
-	    @examen = examen
-	    @contador = 0
+	  attr_accessor :examen,:aciertos,:fecha,:n_preguntas,:respuestas_examen
+	  def initialize(o)
+	    raise ArgumentsError, 'El agurmento debe de ser del tipo ListaEnlazada' unless o.is_a?(ListaEnlazada) 	
+	    @examen = o
+	    @n_preguntas = o.count
 	    @aciertos = 0
+	    @fecha = nil
+	    @respuestas_examen = Array.new[@n_preguntas]
 	  end
-	  
-	  def comenzar_Examen
-	     i=1
-	    @examen.collect do |x|
-	      print "#{i}-) "
-	      x.to_s
-	      i= i + 1
-	      puts "Su respuesta: "
-	      resp =  gets.chomp.to_i
-	      raise IndexError, "La respuesta debe estar entre 1 y #{x.respuestas.size}." unless resp <= x.respuestas.size and resp > 0
-	      aux = x.respuestas[resp-1]
-			if aux[0] == true
-				puts "##################################"
-				puts "#           Correcto!            #"
-				puts "##################################"
-				@aciertos += 1
-				@contador += 1
-			else
-				puts "----------------------------------"
-				puts "---         Fallo              ---"
-				puts "----------------------------------"
-				@contador += 1
-			end
-		end
-		puts "Has acertado el #{(@aciertos/@contador.to_f)*100}% de las preguntas [#{@aciertos} de #{@contador}]."	    
+	  def n_preguntas
+		@n_preguntas = @examen.count
+		return @n_preguntas
 	  end
- 
-	
+	  def cuentaAciertos
+		
+            	     @aciertos = 0		
+		     i=0 
+		      @examen.each do |x|
+		      
+		      	      aux = x.valor.respuestas.at(@respuestas_examen[i])
+			      if(aux != nil && aux[0] == true)
+				@aciertos = @aciertos + 1
+			      end
+			     i=i+1
+		      end
+		      return @aciertos
+	  end
+	  def resultado
+		return ((@aciertos/@n_preguntas)*10)
+	  end
 	end
 
+	class InterfazUsuario
+		
+		def initialize(o)
+	  	raise ArgumentsError, 'El argumento debe ser del tipo Examen' unless o.is_a?(Examen)
+	     		if(o.examen != nil)	    
+			 @objeto_interfaz = o
+	     		end
+		end
+		def imprimirExamen
+			puts " FECHA: " + @objeto_interfaz.fecha
+			puts " Numero de preguntas: " +@objeto_interfaz.n_preguntas
+			@objeto_interfaz.examen.to_s
+		end
+		def ejecutarExamen
+		      @objeto_interfaz.aciertos = 0		
+		      i=1
+		      @objeto_interfaz.examen.each do |x|
+		      print "#{i}-) "
+		      x.to_s
+		      i= i + 1
+		      puts "Su respuesta: "
+		      resp =  gets.chomp.to_i
+		      raise IndexError, "La respuesta debe estar entre 1 y #{x.respuestas.size}." unless resp <= x.respuestas.size and resp > 0
+		      aux = x.respuestas[resp-1]
+				if aux[0] == true
+					puts "##################################"
+					puts "#           Correcto!            #"
+					puts "##################################"
+					@objeto_interfaz.aciertos += 1
+				else
+					puts "----------------------------------"
+					puts "---         Fallo              ---"
+					puts "----------------------------------"
 	
+				end
+			end
+			puts " NOTA : " + @objeto_interfaz.resultado 
+	
+		end
+		def menu
+
+			eleccion = 0
+		    	begin
+			puts "---------------------MENÚ---------------------"
+			puts "- 1-) Imprimir examen 			   -"
+			puts "- 2-) Imprimir examen inverso		   -"
+			puts "- 3-) Ejecutar examen                        -"
+			puts "- 4-) Ejecutar examen inverso  		   -" 
+			puts "----------------------------------------------"
+			
+			puts "\n Introduzca su elección "
+			eleccion = gets.chomp.to_i
+			  case eleccion
+			  when 1
+				puts " HA SELECCIONADO IMPRIMIR EXAMEN"
+				imprimirExamen
+				break
+			  when 2
+			  	puts " HA SELECCIONADO EJECUTAR EL EXAMEN"
+				ejecutarExamen
+				break
+ 			 
+			  end
+			end while (eleccion < 1 || eleccion > 2)
+
+			respuesta = nil
+			puts "DESEA VOLVER A EJECUTAR EL MENÚ ? S/s(Sí)"
+			respuesta = get.chomp
+			if (respuesta == 'S' || respuesta == 's')
+			   menu
+			end
+		end
+
+	end	
 end
 

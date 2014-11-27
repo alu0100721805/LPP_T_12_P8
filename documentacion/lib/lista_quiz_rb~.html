@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>lista_quiz.rb~ - RDoc Documentation</title>
+
+<link href="../fonts.css" rel="stylesheet">
+<link href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/navigation.js"></script>
+<script src="../js/search_index.js"></script>
+<script src="../js/search.js"></script>
+<script src="../js/searcher.js"></script>
+<script src="../js/darkfish.js"></script>
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Gemfile.html">Gemfile</a>
+  
+    <li><a href="../Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li><a href="../Guardfile.html">Guardfile</a>
+  
+    <li><a href="../LICENSE_txt.html">LICENSE</a>
+  
+    <li><a href="../README_md.html">README</a>
+  
+    <li><a href="../Rakefile.html">Rakefile</a>
+  
+    <li><a href="../lib/lista_quiz_rb~.html">lista_quiz.rb~</a>
+  
+    <li><a href="../lista_quiz_gemspec.html">lista_quiz.gemspec</a>
+  
+    <li><a href="../spec/lista_quiz_spec_rb~.html">lista_quiz_spec.rb~</a>
+  
+    <li><a href="../spec/spec_helper_rb~.html">spec_helper.rb~</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page lib/lista_quiz.rb~">
+
+<p>#Práctica 7 #Realizada por Juan José Gregorio Díaz Marrero y Miguel Aurelio
+García González</p>
+
+<p>module <a href="../Quiz.html">Quiz</a></p>
+
+<pre class="ruby"><span class="ruby-keyword">class</span> <span class="ruby-constant">Question</span>
+        <span class="ruby-identifier">include</span> <span class="ruby-constant">Comparable</span>
+        <span class="ruby-identifier">attr_accessor</span> :<span class="ruby-identifier">texto</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">text</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es una cadena&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">text</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+        <span class="ruby-ivar">@texto</span> = <span class="ruby-identifier">text</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@texto</span>                 
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;=&gt;</span>(<span class="ruby-identifier">o</span>)
+            <span class="ruby-ivar">@texto</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">o</span>
+        <span class="ruby-keyword">end</span>  
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">class</span> <span class="ruby-constant">SimpleQuestion</span>
+        <span class="ruby-identifier">include</span> <span class="ruby-constant">Comparable</span>
+        <span class="ruby-identifier">attr_accessor</span> :<span class="ruby-identifier">pregunta</span>, :<span class="ruby-identifier">respuestas</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-operator">&lt;=&gt;</span>(<span class="ruby-identifier">o</span>)
+           <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@pregunta</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">pregunta</span>)
+                <span class="ruby-keyword">return</span> <span class="ruby-ivar">@respuestas</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">respuestas</span>.<span class="ruby-identifier">length</span>
+           <span class="ruby-keyword">else</span>
+                <span class="ruby-keyword">if</span>(<span class="ruby-ivar">@pregunta</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">pregunta</span>)
+                        <span class="ruby-keyword">return</span> <span class="ruby-value">1</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-keyword">return</span> <span class="ruby-value">-1</span>
+                <span class="ruby-keyword">end</span>
+           <span class="ruby-keyword">end</span> 
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">preg</span>) 
+
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es una pregunta&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">preg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Question</span>)
+
+                <span class="ruby-ivar">@pregunta</span> = <span class="ruby-identifier">preg</span> 
+                <span class="ruby-ivar">@respuestas</span> = []                        
+
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">insert_Respuesta</span>(<span class="ruby-identifier">valor</span>=<span class="ruby-keyword">false</span>, <span class="ruby-identifier">resp</span>)
+
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es una cadena&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">resp</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+                <span class="ruby-identifier">arr_respuesta</span> = []
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">valor</span>
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resp</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta</span>                    
+
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+
+                <span class="ruby-identifier">puts</span> <span class="ruby-ivar">@pregunta</span>.<span class="ruby-identifier">to_s</span>
+                <span class="ruby-identifier">i</span> = <span class="ruby-value">1</span>
+                <span class="ruby-ivar">@respuestas</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;(#{i}) #{a[1]}&quot;</span>
+                <span class="ruby-identifier">i</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span>
+        <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-constant">Node</span> = <span class="ruby-constant">Struct</span>.<span class="ruby-identifier">new</span>(:<span class="ruby-identifier">valor</span>, :<span class="ruby-identifier">sig</span> , :<span class="ruby-identifier">ant</span>) <span class="ruby-keyword">do</span>
+
+          <span class="ruby-comment"># Metodo para inicializar la clase</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">valor</span>=<span class="ruby-keyword">nil</span>)
+            <span class="ruby-keyword">if</span> <span class="ruby-identifier">valor!</span>= <span class="ruby-keyword">nil</span>
+             <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es una instancia de la clase SimpleQuestion&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valor</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">SimpleQuestion</span>)
+             <span class="ruby-ivar">@valor</span>=<span class="ruby-identifier">valor</span> 
+            <span class="ruby-keyword">else</span>
+              <span class="ruby-ivar">@valor</span> = <span class="ruby-keyword">nil</span>
+            <span class="ruby-keyword">end</span>
+             <span class="ruby-ivar">@sig</span> = <span class="ruby-keyword">nil</span>
+             <span class="ruby-ivar">@ant</span> = <span class="ruby-keyword">nil</span>
+             <span class="ruby-identifier">puts</span>
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">valor=</span>(<span class="ruby-identifier">arg</span>)
+            <span class="ruby-keyword">if</span>(<span class="ruby-identifier">arg</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es una instancia de la clase SimpleQuestion&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">SimpleQuestion</span>)
+                <span class="ruby-ivar">@valor</span> = <span class="ruby-identifier">arg</span>
+            <span class="ruby-keyword">else</span>
+                <span class="ruby-ivar">@valor</span> = <span class="ruby-keyword">nil</span>
+            <span class="ruby-keyword">end</span> 
+            <span class="ruby-identifier">puts</span>
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">sig=</span>(<span class="ruby-identifier">arg</span>)
+            <span class="ruby-keyword">if</span>(<span class="ruby-identifier">arg</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es un Nodo&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Node</span>)
+                <span class="ruby-ivar">@sig</span> = <span class="ruby-identifier">arg</span>
+            <span class="ruby-keyword">else</span>
+                <span class="ruby-ivar">@sig</span> = <span class="ruby-keyword">nil</span>
+            <span class="ruby-keyword">end</span> 
+            <span class="ruby-identifier">puts</span>
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">ant=</span>(<span class="ruby-identifier">arg</span>)
+             <span class="ruby-keyword">if</span>(<span class="ruby-identifier">arg</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es un Nodo&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">arg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Node</span>)
+                <span class="ruby-ivar">@ant</span> = <span class="ruby-identifier">arg</span>
+             <span class="ruby-keyword">else</span>
+                <span class="ruby-ivar">@ant</span> = <span class="ruby-keyword">nil</span>
+             <span class="ruby-keyword">end</span>
+            <span class="ruby-identifier">puts</span>        
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">valor</span>
+             <span class="ruby-keyword">return</span> <span class="ruby-ivar">@valor</span>      
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">sig</span>
+             <span class="ruby-keyword">return</span> <span class="ruby-ivar">@sig</span>
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-keyword">def</span> <span class="ruby-identifier">ant</span>
+              <span class="ruby-keyword">return</span> <span class="ruby-ivar">@ant</span>
+          <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">BoolQuestion</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">SimpleQuestion</span>
+
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">insert_Respuesta</span> (<span class="ruby-identifier">valor</span>, <span class="ruby-identifier">resp</span>)
+           <span class="ruby-keyword">if</span> <span class="ruby-ivar">@respuestas</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-ivar">@respuestas</span>.<span class="ruby-identifier">clear</span>
+           <span class="ruby-keyword">end</span>
+
+            <span class="ruby-keyword">if</span> (<span class="ruby-identifier">valor</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">resp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;SI&quot;</span>)
+                <span class="ruby-identifier">arr_respuesta</span> = []
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">valor</span>
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resp</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta</span>
+                <span class="ruby-identifier">arr_respuesta2</span> = []
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;NO&quot;</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta2</span>
+
+            <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">valor</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">resp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;NO&quot;</span>)
+
+                <span class="ruby-identifier">arr_respuesta</span> = []
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">valor</span>
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resp</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta</span>
+                <span class="ruby-identifier">arr_respuesta2</span> = []
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;SI&quot;</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta2</span>
+
+            <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">valor</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">resp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;NO&quot;</span>)
+
+                 <span class="ruby-identifier">arr_respuesta</span> = []
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">valor</span>
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resp</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta</span>
+                <span class="ruby-identifier">arr_respuesta2</span> = []
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">false</span>
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;SI&quot;</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta2</span>
+
+            <span class="ruby-keyword">elsif</span> (<span class="ruby-identifier">valor</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">false</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">resp</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;SI&quot;</span>)
+
+                <span class="ruby-identifier">arr_respuesta</span> = []
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">valor</span>
+                <span class="ruby-identifier">arr_respuesta</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">resp</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta</span>
+                <span class="ruby-identifier">arr_respuesta2</span> = []
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">true</span>
+                <span class="ruby-identifier">arr_respuesta2</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;NO&quot;</span>
+                <span class="ruby-ivar">@respuestas</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arr_respuesta2</span>
+
+             <span class="ruby-keyword">else</span>
+                 <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;No se pudo introducir la respuesta ,asegurese de que valor sea un booleano y respuesta del tipo cadena &#39;SI&#39; o &#39;NO&#39;&quot;</span>                      
+             <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+<span class="ruby-keyword">class</span> <span class="ruby-constant">ListaEnlazada</span>
+        <span class="ruby-identifier">include</span> <span class="ruby-constant">Enumerable</span>
+        <span class="ruby-identifier">attr_accessor</span> :<span class="ruby-identifier">head</span>, :<span class="ruby-identifier">tail</span>,:<span class="ruby-identifier">size</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">intialize</span> ()
+          <span class="ruby-ivar">@head</span> = <span class="ruby-keyword">nil</span>
+          <span class="ruby-ivar">@tail</span> = <span class="ruby-keyword">nil</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">buscarNodo</span>(<span class="ruby-identifier">nodo</span>)
+
+            <span class="ruby-keyword">if</span>(<span class="ruby-identifier">nodo</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento no es un Nodo&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">nodo</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Node</span>)
+                <span class="ruby-identifier">aux</span> = <span class="ruby-ivar">@tail</span>
+                <span class="ruby-identifier">cont</span> = <span class="ruby-value">1</span>                 
+                <span class="ruby-keyword">while</span> (<span class="ruby-identifier">aux</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>) <span class="ruby-keyword">do</span>
+                        <span class="ruby-keyword">if</span> (<span class="ruby-identifier">aux</span>.<span class="ruby-identifier">valor</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">nodo</span>.<span class="ruby-identifier">valor</span>)
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Nodo encontrado en la posicion #{cont}&quot;</span>
+
+                        <span class="ruby-keyword">end</span>
+                  <span class="ruby-identifier">cont</span> = <span class="ruby-identifier">cont</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>                               
+                  <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span>
+                <span class="ruby-keyword">end</span>                     
+
+            <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">insertarElemento_despuesdenodo</span>(<span class="ruby-identifier">nodoviejo</span>,<span class="ruby-identifier">nodonuevo</span>)
+
+            <span class="ruby-keyword">if</span>(<span class="ruby-identifier">nodoviejo</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">nodonuevo</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento primero no es un Nodo&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">nodoviejo</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Node</span>)
+                <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;El argumento segungo no es un Nodo&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">nodonuevo</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Node</span>)
+                <span class="ruby-identifier">aux</span> = <span class="ruby-ivar">@tail</span> 
+                <span class="ruby-keyword">while</span> (<span class="ruby-identifier">aux</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>) <span class="ruby-keyword">do</span>
+                        <span class="ruby-keyword">if</span> (<span class="ruby-identifier">aux</span>.<span class="ruby-identifier">valor</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">nodoviejo</span>.<span class="ruby-identifier">valor</span>)
+                                <span class="ruby-keyword">if</span>(<span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
+                                        <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-identifier">nodonuevo</span>
+                                        <span class="ruby-identifier">nodonuevo</span>.<span class="ruby-identifier">ant</span> = <span class="ruby-identifier">aux</span>
+                                        <span class="ruby-identifier">nodonuevo</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-keyword">nil</span>
+                                <span class="ruby-keyword">else</span>
+                                         <span class="ruby-identifier">aux2</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span>
+                                        <span class="ruby-identifier">nodonuevo</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-identifier">aux2</span>
+                                        <span class="ruby-identifier">nodonuevo</span>.<span class="ruby-identifier">ant</span> = <span class="ruby-identifier">aux</span>
+                                        <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-identifier">nodonuevo</span>
+                                        <span class="ruby-identifier">aux2</span>.<span class="ruby-identifier">ant</span> = <span class="ruby-identifier">nodonuevo</span>     
+                                <span class="ruby-keyword">end</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot; Nodo insertado &quot;</span>
+                                <span class="ruby-keyword">return</span>
+                        <span class="ruby-keyword">end</span>     
+
+                  <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span>
+                <span class="ruby-keyword">end</span>                     
+
+            <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span> 
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">insertarElemento_final</span>(<span class="ruby-identifier">nodo</span>)
+            <span class="ruby-keyword">if</span> (<span class="ruby-identifier">nodo</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)                    
+                <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@head</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
+                        <span class="ruby-ivar">@head</span> = <span class="ruby-identifier">nodo</span>
+                        <span class="ruby-ivar">@tail</span> = <span class="ruby-identifier">nodo</span>
+                        <span class="ruby-identifier">nodo</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-keyword">nil</span>
+                        <span class="ruby-identifier">nodo</span>.<span class="ruby-identifier">ant</span> = <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">else</span>
+                        <span class="ruby-identifier">aux_ant</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>                              
+                        <span class="ruby-identifier">aux_ant</span> = <span class="ruby-ivar">@head</span>
+                        <span class="ruby-ivar">@head</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-identifier">nodo</span>
+                        <span class="ruby-ivar">@head</span> = <span class="ruby-identifier">nodo</span>
+                        <span class="ruby-ivar">@head</span>.<span class="ruby-identifier">ant</span> = <span class="ruby-identifier">aux_ant</span>     
+                        <span class="ruby-ivar">@head</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-keyword">nil</span>
+                <span class="ruby-keyword">end</span>
+             <span class="ruby-keyword">end</span>                          
+        <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">eliminarElemento_final</span>
+                <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@head</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)
+                        <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@head</span>.<span class="ruby-identifier">ant</span> <span class="ruby-operator">==</span> <span class="ruby-keyword">nil</span>)
+                          <span class="ruby-ivar">@tail</span> = <span class="ruby-keyword">nil</span>
+                          <span class="ruby-ivar">@head</span> = <span class="ruby-keyword">nil</span>
+                          <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Lista vacia&quot;</span>
+                       <span class="ruby-keyword">else</span>
+                          <span class="ruby-identifier">aux</span> = <span class="ruby-ivar">@head</span>.<span class="ruby-identifier">ant</span>
+                          <span class="ruby-ivar">@head</span> = <span class="ruby-keyword">nil</span>
+                          <span class="ruby-ivar">@head</span> = <span class="ruby-identifier">aux</span>
+                          <span class="ruby-ivar">@head</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-keyword">nil</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">each</span>
+
+                <span class="ruby-identifier">aux</span> = <span class="ruby-ivar">@tail</span>
+                <span class="ruby-keyword">while</span> (<span class="ruby-identifier">aux</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> ) <span class="ruby-keyword">do</span>
+
+                         <span class="ruby-keyword">yield</span> <span class="ruby-identifier">aux</span>                              
+                         <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span>
+
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span> 
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+                <span class="ruby-identifier">aux</span> = <span class="ruby-ivar">@tail</span>
+                <span class="ruby-keyword">while</span> (<span class="ruby-identifier">aux</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> ) <span class="ruby-keyword">do</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">valor</span>.<span class="ruby-identifier">to_s</span>     
+                        <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span>
+                <span class="ruby-keyword">end</span>
+
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">invertirLista</span>
+
+                <span class="ruby-identifier">listainvertida</span> = <span class="ruby-constant">ListaEnlazada</span>.<span class="ruby-identifier">new</span>
+                 <span class="ruby-identifier">aux</span> = <span class="ruby-ivar">@head</span>                    
+                <span class="ruby-keyword">while</span> (<span class="ruby-identifier">aux</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>) <span class="ruby-keyword">do</span> 
+                        <span class="ruby-identifier">nuevo_nodo</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>
+                        <span class="ruby-identifier">nuevo_nodo</span>.<span class="ruby-identifier">sig</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">sig</span>
+                        <span class="ruby-identifier">nuevo_nodo</span>.<span class="ruby-identifier">ant</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">ant</span>
+                        <span class="ruby-identifier">nuevo_nodo</span>.<span class="ruby-identifier">valor</span> = <span class="ruby-identifier">aux</span>.<span class="ruby-identifier">valor</span>
+                        <span class="ruby-identifier">listainvertida</span>.<span class="ruby-identifier">insertarElemento_final</span>(<span class="ruby-identifier">nuevo_nodo</span>)
+                        <span class="ruby-identifier">aux</span> =<span class="ruby-identifier">aux</span>.<span class="ruby-identifier">ant</span>    
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">return</span> <span class="ruby-identifier">listainvertida</span>
+
+        <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">class</span> <span class="ruby-constant">Examen</span>
+  <span class="ruby-identifier">attr_accessor</span> :<span class="ruby-identifier">examen</span>,:<span class="ruby-identifier">aciertos</span>,:<span class="ruby-identifier">fecha</span>,:<span class="ruby-identifier">n_preguntas</span>,:<span class="ruby-identifier">respuestas_examen</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">o</span>)
+    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentsError</span>, <span class="ruby-string">&#39;El agurmento debe de ser del tipo ListaEnlazada&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">ListaEnlazada</span>)       
+    <span class="ruby-ivar">@examen</span> = <span class="ruby-identifier">o</span>
+    <span class="ruby-ivar">@n_preguntas</span> = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">count</span>
+    <span class="ruby-ivar">@aciertos</span> = <span class="ruby-value">0</span>
+    <span class="ruby-ivar">@fecha</span> = <span class="ruby-keyword">nil</span>
+    <span class="ruby-ivar">@respuestas_examen</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>[<span class="ruby-ivar">@n_preguntas</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">n_preguntas</span>
+        <span class="ruby-ivar">@n_preguntas</span> = <span class="ruby-ivar">@examen</span>.<span class="ruby-identifier">count</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-ivar">@n_preguntas</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">cuentaAciertos</span>
+
+             <span class="ruby-ivar">@aciertos</span> = <span class="ruby-value">0</span>              
+             <span class="ruby-identifier">i</span>=<span class="ruby-value">0</span> 
+              <span class="ruby-ivar">@examen</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+
+                      <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">valor</span>.<span class="ruby-identifier">respuestas</span>.<span class="ruby-identifier">at</span>(<span class="ruby-ivar">@respuestas_examen</span>[<span class="ruby-identifier">i</span>])
+                      <span class="ruby-keyword">if</span>(<span class="ruby-identifier">aux</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">aux</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>)
+                        <span class="ruby-ivar">@aciertos</span> = <span class="ruby-ivar">@aciertos</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+                      <span class="ruby-keyword">end</span>
+                     <span class="ruby-identifier">i</span>=<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+              <span class="ruby-keyword">end</span>
+              <span class="ruby-keyword">return</span> <span class="ruby-ivar">@aciertos</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">resultado</span>
+        <span class="ruby-keyword">return</span> ((<span class="ruby-ivar">@aciertos</span><span class="ruby-operator">/</span><span class="ruby-ivar">@n_preguntas</span>)<span class="ruby-operator">*</span><span class="ruby-value">10</span>)
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">class</span> <span class="ruby-constant">InterfazUsuario</span>
+
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">o</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentsError</span>, <span class="ruby-string">&#39;El argumento debe ser del tipo Examen&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Examen</span>)
+                <span class="ruby-keyword">if</span>(<span class="ruby-identifier">o</span>.<span class="ruby-identifier">examen</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword">nil</span>)         
+                 <span class="ruby-ivar">@objeto_interfaz</span> = <span class="ruby-identifier">o</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">imprimirExamen</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot; FECHA: &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">fecha</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot; Numero de preguntas: &quot;</span> <span class="ruby-operator">+</span><span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">n_preguntas</span>
+                <span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">examen</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">ejecutarExamen</span>
+              <span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">aciertos</span> = <span class="ruby-value">0</span>             
+              <span class="ruby-identifier">i</span>=<span class="ruby-value">1</span>
+              <span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">examen</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span><span class="ruby-operator">|</span>
+              <span class="ruby-identifier">print</span> <span class="ruby-node">&quot;#{i}-) &quot;</span>
+              <span class="ruby-identifier">x</span>.<span class="ruby-identifier">to_s</span>
+              <span class="ruby-identifier">i</span>= <span class="ruby-identifier">i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+              <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Su respuesta: &quot;</span>
+              <span class="ruby-identifier">resp</span> =  <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">to_i</span>
+              <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-node">&quot;La respuesta debe estar entre 1 y #{x.respuestas.size}.&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">resp</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">x</span>.<span class="ruby-identifier">respuestas</span>.<span class="ruby-identifier">size</span> <span class="ruby-keyword">and</span> <span class="ruby-identifier">resp</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+              <span class="ruby-identifier">aux</span> = <span class="ruby-identifier">x</span>.<span class="ruby-identifier">respuestas</span>[<span class="ruby-identifier">resp</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>]
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">aux</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">true</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;##################################&quot;</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#           Correcto!            #&quot;</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;##################################&quot;</span>
+                                <span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">aciertos</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+                        <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;----------------------------------&quot;</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;---         Fallo              ---&quot;</span>
+                                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;----------------------------------&quot;</span>
+
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot; NOTA : &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-ivar">@objeto_interfaz</span>.<span class="ruby-identifier">resultado</span> 
+
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">def</span> <span class="ruby-identifier">menu</span>
+
+                <span class="ruby-identifier">eleccion</span> = <span class="ruby-value">0</span>
+                <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;---------------------MENÚ---------------------&quot;</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;- 1-) Imprimir examen                        -&quot;</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;- 2-) Imprimir examen inverso                -&quot;</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;- 3-) Ejecutar examen                        -&quot;</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;- 4-) Ejecutar examen inverso                -&quot;</span> 
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;----------------------------------------------&quot;</span>
+
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;\n Introduzca su elección &quot;</span>
+                <span class="ruby-identifier">eleccion</span> = <span class="ruby-identifier">gets</span>.<span class="ruby-identifier">chomp</span>.<span class="ruby-identifier">to_i</span>
+                  <span class="ruby-keyword">case</span> <span class="ruby-identifier">eleccion</span>
+                  <span class="ruby-keyword">when</span> <span class="ruby-value">1</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot; HA SELECCIONADO IMPRIMIR EXAMEN&quot;</span>
+                        <span class="ruby-identifier">imprimirExamen</span>
+                        <span class="ruby-keyword">break</span>
+                  <span class="ruby-keyword">when</span> <span class="ruby-value">2</span>
+                        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot; HA SELECCIONADO EJECUTAR EL EXAMEN&quot;</span>
+                        <span class="ruby-identifier">ejecutarExamen</span>
+                        <span class="ruby-keyword">break</span>
+
+                  <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span> <span class="ruby-keyword">while</span> (<span class="ruby-identifier">eleccion</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">eleccion</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">2</span>)
+
+                <span class="ruby-identifier">respuesta</span> = <span class="ruby-keyword">nil</span>
+                <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;DESEA VOLVER A EJECUTAR EL MENÚ ? S/s(Sí)&quot;</span>
+                <span class="ruby-identifier">respuesta</span> = <span class="ruby-identifier">get</span>.<span class="ruby-identifier">chomp</span>
+                <span class="ruby-keyword">if</span> (<span class="ruby-identifier">respuesta</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;S&#39;</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">respuesta</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;s&#39;</span>)
+                   <span class="ruby-identifier">menu</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+
+<span class="ruby-keyword">end</span>
+</pre>
+
+<p>end</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://rdoc.rubyforge.org">RDoc</a> 4.1.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
