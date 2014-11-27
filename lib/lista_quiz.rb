@@ -280,14 +280,11 @@ module Quiz
 
 			listainvertida = ListaEnlazada.new
 			 aux = @head			
-			while (aux != nil) do 
-				nuevo_nodo = Node.new
-				nuevo_nodo.sig = aux.sig
-				nuevo_nodo.ant = aux.ant
-				nuevo_nodo.valor = aux.valor
-				listainvertida.insertarElemento_final(nuevo_nodo)
-				aux =aux.ant	
-			end
+			self.reverse_each {|x| nuevo_nodo = Node.new
+			               nuevo_nodo.sig = x.sig
+				       nuevo_nodo.ant = x.ant
+			               nuevo_nodo.valor = x.valor
+			               listainvertida.insertarElemento_final(nuevo_nodo)}
 			return listainvertida
 
 		end
